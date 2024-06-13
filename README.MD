@@ -79,6 +79,19 @@ vector<int> vec(other_vec); // same as other_vec
 vector<int> vec(other_vec.begin(), other_vec.end()); // same as other_vec
 ```
 
+# 9.2.5 赋值和swap （P302）（不适用于关联容器和array）
+使用assign（仅顺序容器）
+与赋值运算符的区别：
+1、赋值运算符要求 左边和右边的运算对象具有相同的类型。它将右边运算对象中所有元素拷贝到左边运算对象。中。
+2、assign 允许我们从一个不同但相容的类型赋值，或者从容器的一个字序列赋值。
+```cpp
+list<string> names;
+vector<const char*> oldStyle;
+names=oldStyle;//错误，容器类型不匹配·
+names.assign(oldStyle.cbeing(),oldStyle.cend());//可以 将 const char* 转换为 string
+```
+
+
 # 9.2 容器库概览
 对容器可以保存的元素类型的限制。
 没有默认构造函数的类类型容器的声明
@@ -100,6 +113,10 @@ while (begin != end){//迭代器比较
 
 
 ```
+# 使用迭代器需要考虑的问题：
+1、编写改变容器的循环程序，添加/删除 vector 、string、deque 元素的循环程序必须考虑迭代器，引用和指针可能失效的问题。（P316）
+2、不要保存end返回的迭代器
+
 
 # 9.3.2 访问元素
 在解引用一个迭代器或调用front 或back  之前检查是否有元素,访问成员函数返回的是引用。在容器中访问元素的成员函数（即 front, back,下标和at）返回的都是引用，但是接受返回值的变量必须声明为引用类型。
