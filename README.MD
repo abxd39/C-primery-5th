@@ -77,6 +77,35 @@ vector<int> vec(10,1);  // 1
 vector<int> vec{1,2,3,4,5}; // 1,2,3,4,5
 vector<int> vec(other_vec); // same as other_vec
 vector<int> vec(other_vec.begin(), other_vec.end()); // same as other_vec
+
+```
+删除出元素范例
+```cpp
+#include<forward_list>
+#include<list>
+//list
+list<int> lst={0,1,2,3,4,5,6,7,8,9,0};
+auto it=lst.begin();
+while(it!=lst.end()){
+    if(*it%2)
+    {
+        it=lst.erase(it);//删除该元素
+    }else{
+        ++it;
+    }
+}
+//forward_list单向链表 P313
+forward_list<int> flst={0,1,2,3,4,5,6,7,8,9}
+auto prev=flst.before_begin();//首前元素
+auto curr=flst.begin();//首元素
+while(curr!=flst.end()){//仍有元素需要处理
+    if(*curr%2){
+        curr=flat.erase_after(prev);//删除并移动curr
+    }else{
+        prev=curr;//prev指向curr之前的元素
+        ++curr;//移动迭代器curr, 指向下一个元素
+    }
+}
 ```
 
 # 9.2 容器库概览
