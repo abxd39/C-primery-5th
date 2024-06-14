@@ -57,10 +57,13 @@ bool(*pf)(const string &,const string&)
 使用赋值运算符
 
 # 7.5.4 隐式的类类型转换 
+
 # 8.1 IO类
 使用IO操作处理string中的字符会很方便。（P278） 此话怎讲？
 
 IO类型间的关系
+# 8.1.1 IO对象无拷贝和赋值 
+进行IO操作的函数通常以引用方式传递和返回流。读写一个IO对象会改变其状态，因此传递和返回的引用不能是const 修饰的。
 
 
 # 8.1.2 条件状态
@@ -230,12 +233,48 @@ auto ret=std::copy(begin(a1),end(a1),a2);
 //将所有值为0的元素修改为42，
 replace(ilst.being(),ilst.end(),0,42);
 //ivec 包含ilst的一份拷贝，0  不过原来在ilst中值为0的元素在ivec中 都被修改为42
-replace_copy(ilst.being(),ilst.end(),back_inserter(ivec),0,42)
+replace_copy(ilst.being(),ilst.end(),back_inserter(ivec),0,42);
 
 ```
 
 # 10.2.3 重排容器元素的算法
+消除重复单词：
+首先sort 排序，
+unique 重排，移动元素覆盖掉 重复的元素，
+使用erase 删除 unique 返回的迭代器于原容器尾后迭代器之间的元素。 
+```cpp
+sort(words.bein(),words.end());
+//
+auto end_unique=unique(words.begin(),words.en());
+//使用vector 操作erase 删除重复单词
+words.erase(end_unique,words.end());//
+```
 
+ # 使用容器操作删除元素
+
+# 10.3 定制操作
+
+# 10.3.1 向算法传递函数
+
+# 10.3.2 lambda 表达式  表示一个可调用的代单元。可以理解为一个未命名的内联函数。（P346）
+1、可以定义在函数内部。
+2、必须使用尾后返回指定返回类型。（此处的必须强调的是返回类型的声明方式）
+3、可以忽略参数列表和返回类型，但必须永远包含捕获列表和函数体。
+4、lambda 不能有默认参数。
+5、捕获列表只用于局部非static 变量，lambda可以直接使用局部static变量和定义在当前函数之外的名字
+6、以传值参数类似，采用值捕获的前提是变量可以拷贝。捕获变量的值是在lambda创建时拷贝，不是调用时拷贝。
+7、为了指示编译器推断捕获列表，应该在捕获列表中写一个&或=。&高告诉编译器采用捕获引用方式，=则表示采用值捕获方式。
+例如：
+```cpp
+auto f=[]{return 20;};
+```
+# 一个lambda 表达式具有如下形式
+[capture list](parameter list)-> return type{ function body}
+capture list 为捕获列表
+
+lambda 以一对[]开始，我们在其中提供一个以逗号分隔的名字列表，这些名字都是它所在函数中定义的。
+
+# lambda引用捕获 
 
 # 14.9.1 类型转换运算符 ————类型转换运算符是类的一种特殊成员函数，
 operator type()const;
@@ -271,3 +310,5 @@ constexpr 函数的要求 唯一可执行语句就是返回语句。也可以是
 
 # 模板 ————C++语言既有类模板也有函数模板 其中vector 是一个类模板，模板本身不是类也不是函数，相反可以看作为编译器生成类或函数编写的一份说明，
 编译器根据模板来创建类或函数的过程称为实例化，当使用模板时需要指出编译器应把类模板或函数模板实例化成何种类型或函数。
+
+
