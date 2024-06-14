@@ -58,7 +58,11 @@ bool(*pf)(const string &,const string&)
 
 # 7.5.4 隐式的类类型转换 
 # 8.1 IO类
-使用IO操作处理string中的字符会很方便。
+使用IO操作处理string中的字符会很方便。（P278） 此话怎讲？
+
+IO类型间的关系
+
+
 # 8.1.2 条件状态
 由于流可能处于错误状态，因此代码通常应该在使用一个流之前检查它是否处于良好状态，确定一个流对象的状态的最简单方式是将它作为一个条件来使用
 ``` c++ 
@@ -77,6 +81,35 @@ vector<int> vec(10,1);  // 1
 vector<int> vec{1,2,3,4,5}; // 1,2,3,4,5
 vector<int> vec(other_vec); // same as other_vec
 vector<int> vec(other_vec.begin(), other_vec.end()); // same as other_vec
+
+```
+删除出元素范例
+```cpp
+#include<forward_list>
+#include<list>
+//list
+list<int> lst={0,1,2,3,4,5,6,7,8,9,0};
+auto it=lst.begin();
+while(it!=lst.end()){
+    if(*it%2)
+    {
+        it=lst.erase(it);//删除该元素
+    }else{
+        ++it;
+    }
+}
+//forward_list单向链表 P313
+forward_list<int> flst={0,1,2,3,4,5,6,7,8,9}
+auto prev=flst.before_begin();//首前元素
+auto curr=flst.begin();//首元素
+while(curr!=flst.end()){//仍有元素需要处理
+    if(*curr%2){
+        curr=flat.erase_after(prev);//删除并移动curr
+    }else{
+        prev=curr;//prev指向curr之前的元素
+        ++curr;//移动迭代器curr, 指向下一个元素
+    }
+}
 ```
 
 # 9.2.5 赋值和swap （P302）（不适用于关联容器和array）
@@ -131,6 +164,77 @@ if(!c.empoty()){
 }
 ```
 
+# 10 泛型算法 （排序和搜索...） 
+算法是如何工作的（P337）
+迭代器令算法不依赖于容器，但是依赖于元素类型的操作（P337）
+除了少数例外，标准库算法都对一个范围内的元素进行操作，我们将此范围称为“输入范围”，接受输入范围的算法总是使用前两个参数来表示此范围，两个参数分别指向要处理的第一个元素和尾元素之后的位置的迭代器。虽然大多数算法遍历输入范围的方式相似，但它们使用范围中元素的方式不同，理解算法的最基本的方法就是了解它们是否读取元素，改变元素，或重排元素顺序。
+
+# 10.2.1 只读算法
+ 一些算法只会读取其输入范围内的元素，而不改变元素，
+ ```cpp
+ #include <algorithm>
+//如果在vec 中找到了想要的元素，则返回结果给指向它，否则返回结果为vec.cend()
+auto result= std::find(vec.cbegin(),vec.cend(),val);
+//在 ls 中统计 字符串“aa” 出现的次数
+ std::count(ls.cbegin(), ls.cend(), "aa")
+ //对vec 中的元素求和,和的初始值是0
+ int sum= std::accumulate(vec.cbegin(),vec.cend(),0) 
+
+```
+##[Exercise 10.1 and 10.2](/CppPrimer-master/ch10/ex10_01_02.cpp)
+
+# 操作两个序列的算法
+另一个只读算法是equal,用于确定两个序列是否保存了相同的值。
+
+```cpp
+//roster2 中的元素数目应该至少与roster1一样多
+bool isEqual=std::equal(roster1.cbegin(),roster1.cend(),roster2.cbegin())
+```
+
+# 10.2.2 写容器元素的算法
+必须注意确保序列原大小至少不小于我们要求算法写入的元素数目。算法不会执行扩容操作。因此它们自身不可能改变容器的大小。
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using std::vector; using std::cout; using std::endl; using std::fill_n; using std::fill;
+
+int main()
+{
+    vector<int> vec{0,1,2,3,4,5,6,7,8,9};
+    //将每个元素重置为0
+    fill(vec.begin(),vec.end(),0);
+    //将容器的一个子序列重置为1
+    fill(vec.begin(),vec.begin()+vec.size()/2,1);
+    //所有元素重置为0
+    fill_n(vec.begin(), vec.size(), 0);
+    
+    for (auto i : vec)
+        cout << i << " ";
+    cout << endl;
+}
+
+
+```
+# 介绍back_inserter (P341)
+插入迭代器是一种向容器中添加元素的迭代器。back_inserter 它是定义在头文件iterator中的一个函数， back_inserter 接受一个指向容器的引用，返回一个与该容器绑定的插入迭代器。
+
+# 拷贝算法 copy 传递给copy 的目的序列至少要包含与输入序列一样多的元素，
+```cpp
+int a1[]={0,1,2,3,4,5,6,7,8,9};
+int a2[sizeof(a1)/sizeof(*a1)];//a2与a1 大小一样
+//ret 恰好指向拷贝到a2的尾元素之后的位置
+auto ret=std::copy(begin(a1),end(a1),a2);
+
+//将所有值为0的元素修改为42，
+replace(ilst.being(),ilst.end(),0,42);
+//ivec 包含ilst的一份拷贝，0  不过原来在ilst中值为0的元素在ivec中 都被修改为42
+replace_copy(ilst.being(),ilst.end(),back_inserter(ivec),0,42)
+
+```
+
+# 10.2.3 重排容器元素的算法
 
 
 # 14.9.1 类型转换运算符 ————类型转换运算符是类的一种特殊成员函数，
@@ -165,6 +269,5 @@ constexpr 函数的要求 唯一可执行语句就是返回语句。也可以是
 
 虚表指针，虚函数，纯虚函数，虚函数指针。
 
-# 模板 ————C++语言既有类模板也有函数模板，模板本身不是类也不是函数，相反可以看作为编译器生成类或函数编写的一份说明，
-编译器根据模板来创建类或函数的过程称为实例化，当使用模板时需要指出，编译器应把类模板或函数模板实例化成何种类型或函数。
-利用模板，我们可以使用具有继承关系的类，而不必了解继承机制的工作细节。
+# 模板 ————C++语言既有类模板也有函数模板 其中vector 是一个类模板，模板本身不是类也不是函数，相反可以看作为编译器生成类或函数编写的一份说明，
+编译器根据模板来创建类或函数的过程称为实例化，当使用模板时需要指出编译器应把类模板或函数模板实例化成何种类型或函数。
