@@ -85,9 +85,10 @@ vector<int> vec(other_vec.begin(), other_vec.end()); // same as other_vec
 1、赋值运算符要求 左边和右边的运算对象具有相同的类型。它将右边运算对象中所有元素拷贝到左边运算对象。中。
 2、assign 允许我们从一个不同但相容的类型赋值，或者从容器的一个字序列赋值。
 ```cpp
-list<string> names;
+
+list< string> names;
 vector<const char*> oldStyle;
-names=oldStyle;//错误，容器类型不匹配·
+names=oldStyle;//错误，容器类型不匹配
 names.assign(oldStyle.cbeing(),oldStyle.cend());//可以 将 const char* 转换为 string
 ```
 

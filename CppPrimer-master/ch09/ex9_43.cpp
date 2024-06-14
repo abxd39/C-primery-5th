@@ -23,7 +23,7 @@ void Replace(string &s, string const& oldVal, string const& newVal) {
 
     for (auto iter = s.begin(), end = prev(s.end(), val_size - 1); iter != end; ++iter) {
         if (string{iter, iter + val_size} == oldVal) {
-            iter = s.earse(iter, iter + val_size);
+            iter = s.erase(iter, iter + val_size);
             iter = s.insert(iter, newVal.cbegin(), newVal.cend()); // gcc 4.9 bug (see http://stackoverflow.com/questions/29690369)
             iter += newVal.size();
         }
