@@ -86,6 +86,10 @@ vector<int> vec(other_vec); // same as other_vec
 vector<int> vec(other_vec.begin(), other_vec.end()); // same as other_vec
 
 ```
+
+# 9.1 顺序容器概述
+ 确定使用那种顺序容器。（P293）如何选择合适的顺序容器。
+
 删除出元素范例
 ```cpp
 #include<forward_list>
@@ -101,7 +105,7 @@ while(it!=lst.end()){
         ++it;
     }
 }
-//forward_list单向链表 P313
+//特殊的forward_list单向链表 操作 P313
 forward_list<int> flst={0,1,2,3,4,5,6,7,8,9}
 auto prev=flst.before_begin();//首前元素
 auto curr=flst.begin();//首元素
@@ -275,17 +279,27 @@ capture list 为捕获列表
 lambda 以一对[]开始，我们在其中提供一个以逗号分隔的名字列表，这些名字都是它所在函数中定义的。
 
 # lambda引用捕获
+accumulate 算法 P338
+equal 算法 P339
+find 算法 P336
+fill 算法 P340
+fill_n 算法 P340
+replace 算法 P342
+replace_copy 算法 P342
+partition 划分算法 P345 （练习 10.13）
+copy 算法P341
 erase 算法
 unique 算法 P343
+unique_copy
 sort 算法
-table_sort 算法 P347
-find_if 算法 P348
+table_sort 排序算法 P347
+find_if 算法 P346 P348
 for_each 算法 P348
 使用示例⬇⬇⬇⬇
 ##[Exercise 10.16](/CppPrimer-master/ch10/ex10_16.cpp)
 
-# 10.3.4  参数绑定
- 标准库 bind 函数  它定义在头文件functional中 ，可以将bind看作一个通用函数适配器，接受一个可调用对像（计做 对象1），生成一个新的可调用对象（记做对象2）来“适应” 或适配泛型算法函数的谓词参数 （P354）
+# 10.3.4  参数绑定 标准库 bind 函数  
+ 它定义在头文件functional中 ，可以将bind看作一个通用函数适配器，接受一个可调用对像（计做 对象1），生成一个新的可调用对象（记做对象2）来“适应” 或适配泛型算法函数的谓词参数 （P354）
  对象1 ：是一个有多个参数的自定义函数
  对象2:适配器bind 生成的一个符合谓词参数的函数
  函数对象1 定义如下：
@@ -298,11 +312,33 @@ for_each 算法 P348
 bind 做了什么？
  1、绑定谓词不能接受的剩余参数；（函数重载）
  2、新的的调用对象的参数，绑定到占位符上。
+ 3、如果我们希望传递给bind一个对象而不是拷贝它，就必须使用标准库 ref 函数
+
+ ```cpp
+ //IO 类的对象是不支持拷贝赋值的。只能是引用或指针。
+ for_each(words.begin(),words.end(),bind(print,ref(os),_1,' '));
+/函数ref 返回一个对象，包含给定的引用。此对象可以拷贝。
+ ```
+# 10.4 在探迭代器
+
 
 # 10.4.1 节练习
 unique_copy 算法
 ## [Exercise 10.27](/CppPrimer-master/ch10/ex10_27.cpp)
  
+
+ # 10.4.2 iostream 迭代器
+ 使用算法操作流迭代器（P360）
+ ## ostream_iterator 操作 创建一个ostream_iterator 时 我们可以提供一个可选的第二参数，它是一个字符串，在输出每个元素后都会打印次字符串，次字符串是一个C风格字符串。 必须将ostream_iterator 绑定到一个指定的流，不允许创建一个空的或表示尾后位置的ostream_iterator ;
+ ## [Exercise 10.33](/CppPrimer-master/ch10/ex10_33.cpp)
+
+# 10.4.3 反向迭代器（reverse_iterator） base 成员函数返回其对应的谱图迭代器；
+使用范例;
+## [Exercise 10.34 ~ 10.37](/CppPrimer-master/ch10/ex10_34_35_36_37.cpp)
+反向迭代器的目的是表示元素范围，而这些元素范围是不对称的，这导致一个重要的结果：当我们从一个谱通迭代器初始化一个反向迭代器，或是给一个反向迭代器赋值时，结果迭代器与原迭代器指向的不是相同的元素。
+
+#  11.0 关联容器 
+单想知道一个值是否存在时，set是最有用的。
 
 # 14.9.1 类型转换运算符 ————类型转换运算符是类的一种特殊成员函数，
 operator type()const;
