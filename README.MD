@@ -340,6 +340,30 @@ unique_copy 算法
 #  11.0 关联容器 
 单想知道一个值是否存在时，set是最有用的。
 
+# 11.2.2 关键字类型的要求
+有序容器的关键字类型 可以向一个算法提供给我们自己定义的比较操作。以之类似，也可以提供自己定义的操作来代替关键字上的 < 运算符
+
+使用关键字类型的比较函数。————用来组织一个容器中元素操作的类型也时该容器类型的一部分，为了指定使用自定义的操作。必须在定义关联容器类型时提供此操作的类型。
+
+```cpp
+bool compareIsbn(const Sales_data &lhs, const Sales_data &rhs)
+{
+    return lhs.isbn() < rhs.isbn();
+}
+
+using compareType = bool (*)(const Sales_data &lhs, const Sales_data &rhs);
+//typedef bool(*compareType)(const Sales_data &lhs, const Sales_data &rhs);
+//为了使用自定义的操作，在定义multiset时我们必须提供两个类型。关键字类型，关键字比较操作类型
+std::multiset<Sales_data, compareType> bookstore(compareIsbn);
+
+//关键字类型为 Sales_data 
+//关键字类型的比较函数 compareIsbn
+//
+
+```
+# 10.3.2 添加元素
+检测insert 的返回值类型。添加一个元素的 insert和emplace 返回一个pair ,告诉插入是否成功，pair的first 成员是一个迭代器，指向具有给定关键字的元素，second成员是一个bool值。
+
 # 14.9.1 类型转换运算符 ————类型转换运算符是类的一种特殊成员函数，
 operator type()const;
 因为类型转换运算符是隐式执行的，所以无法给这些函数转递实参，也就不能在类型转换运算符的定义中使用任何形参。
