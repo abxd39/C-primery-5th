@@ -457,7 +457,75 @@ unique_ptr<int> clone(int p) {
 ```
 
 # 向unique_ptr 传递删除器
+# 指向数组的unique_ptr，我们不能使用点和箭头成员运算符，我们可以使用下标运算符来访问数组中的元素
+```cpp
+unique_ptr<int[]> up new(int [10]);
+for(size_t i=0;i!=10;i++){
+    up[i]=i;
+}
+up.release();//自动用delete [] 销毁其指针
+```
+//不推荐使用shared_ptr管理动态数组
+与unique_ptr不同 shared_ptr不能直接支持管理动态数组。如果希望使用 shared_ptr管理一个动态数组，必须提供自定义的删除器。
+```cpp
+shared_ptr<int> sp(new int[10],[](int*p){delete []p;});
+sp.reset();
 
+```
+
+12.2.2 allocator 类 声明在头文件 memory 中
+
+与new的区别 new ---分配内存的同时初始化。
+
+allocator 分配内存时：将内存分配和对象构造分开。 意味着我们可以分配大块内存，只在真正需要时才真正执行对象创建操作。
+表12.7 标准库allocator类及其算法(P428)
+allocator 分配未构造的内存
+
+# 拷贝和填充未初始化内存算法
+
+# 12.3使用标准库：文本查询程序
+```cpp
+#pragma once 
+#ifndef TEXT_QUERY_H
+#define TEXT_QUERY_H
+#include"textResult.h"
+#include <fstream>
+#include <set>
+#include<map>
+#include<memory>
+class TextResult;
+class TextQuery{
+    public:
+    TextQuery(std::ifstream&ifs);
+     std::shared_ptr<TextResult> query(std::string);
+    ~TextQuery();
+    private:
+    std::vector<std::string> lines;
+    std::map<std::string,std::set<int>> worldCoutm;
+    std::shared_ptr<TextResult>resultShard;
+}
+
+#enif //TEXT_QUERY_H
+
+#pragma once 
+#ifndef TEXT_RESULT_H
+#define TEXT_RESULT_H
+#include<iostream>
+#include<set>
+#include<string>
+class TextResult {
+    public:
+    TextResult(std::string li,std::set<int>&linset):line(li),number(linset);
+    ~TextResult();
+   friend void printt(std::cout &cc,TextResult&tr);
+    private:
+    std::set<int> number;
+    std:string line;
+}
+void printt(std::cout &cc, TextResult &tr);
+#endif 
+
+```
 
 # 14.9.1 类型转换运算符 ————类型转换运算符是类的一种特殊成员函数，
 operator type()const;
@@ -501,8 +569,8 @@ friend 关键字修饰的类，或者函数。（P241、P250）
 编译器根据模板来创建类或函数的过程称为实例化，当使用模板时需要指出编译器应把类模板或函数模板实例化成何种类型或函数。
 
 
-关键字 （意味着出现的地方）P424 
-值的注意 出现的地方 P421
+关键字 [意味着]出现的地方 P424 
+[值的注意] 出现的地方 P421
 
 
 # 遗留的问题
