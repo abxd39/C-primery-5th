@@ -485,45 +485,6 @@ allocator 分配未构造的内存
 
 # 12.3使用标准库：文本查询程序
 ```cpp
-#pragma once 
-#ifndef TEXT_QUERY_H
-#define TEXT_QUERY_H
-#include"textResult.h"
-#include <fstream>
-#include <set>
-#include<map>
-#include<memory>
-class TextResult;
-class TextQuery{
-    public:
-    TextQuery(std::ifstream&ifs);
-     std::shared_ptr<TextResult> query(std::string);
-    ~TextQuery();
-    private:
-    std::vector<std::string> lines;
-    std::map<std::string,std::set<int>> worldCoutm;
-    std::shared_ptr<TextResult>resultShard;
-}
-
-#enif //TEXT_QUERY_H
-
-#pragma once 
-#ifndef TEXT_RESULT_H
-#define TEXT_RESULT_H
-#include<iostream>
-#include<set>
-#include<string>
-class TextResult {
-    public:
-    TextResult(std::string li,std::set<int>&linset):line(li),number(linset);
-    ~TextResult();
-   friend void printt(std::cout &cc,TextResult&tr);
-    private:
-    std::set<int> number;
-    std:string line;
-}
-void printt(std::cout &cc, TextResult &tr);
-#endif 
 
 ```
 
