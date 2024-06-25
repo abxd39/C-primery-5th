@@ -622,3 +622,5 @@ Ai的回答
 标准库的一下问题
 1、新标准的最主要的特性是哪些？
 2、C++ 标准库容器对异常发生时其自身的行为提供保障，是怎么做的？[具体做法](/CppPrimer-master/STL/noexcept.md)
+3、C++ 开发准则 C++ Core Guidelines [开发指南](/CppPrimer-master/STL/C++%20Core%20Guidelines.md)
+4、[C++ 三大标准 四大范式](/CppPrimer-master/STL/三大标准四大范式.md)
