@@ -18,13 +18,13 @@ HasPtr::HasPtr(const HasPtr &hp) : ps(new std::string(*hp.ps)), i(hp.i)
 {
     std::cout << "call copy constructor" << std::endl;
 }
-
+//移动构造函数
 HasPtr::HasPtr(HasPtr &&p) noexcept : ps(p.ps), i(p.i)
 {
     p.ps = 0;
     std::cout << "call move constructor" << std::endl;
 }
-
+//赋值运算符即是移动赋值运算符，也是拷贝赋值运算符
 HasPtr& HasPtr::operator=(HasPtr rhs)
 {
     swap(*this, rhs);

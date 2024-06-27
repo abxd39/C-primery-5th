@@ -518,20 +518,15 @@ operator type()const;
 因为类型转换运算符是隐式执行的，所以无法给这些函数转递实参，也就不能在类型转换运算符的定义中使用任何形参。
 
 
-# 关键字
-explicit 抑制构造函数定义的隐式类型转换。
-隐式类型转换，与之对应的是显示类型转换。
+# 关键字 说明及使用示例列表
+[explicit](/CppPrimer-master/keyword/explicit.md)
+[friend](/CppPrimer-master/ch14/ex14_02.h)
+[inline](/CppPrimer-master/ch14/ex14_02.h)
+[operator>>](/CppPrimer-master/ch14/ex14_02.h)
+[operator<<](/CppPrimer-master/ch14/ex14_02.h)
+[operator+](/CppPrimer-master/ch14/ex14_02.h)
+[operator+=](/CppPrimer-master/ch14/ex14_02.h)
 
-隐式类型转换是由编译器自动进行的，当需要将一种类型转换为目标类型时，无需显式地调用构造函数或转换操作符。这种转换在某些场景下会发生，例如赋值操作、函数参数传递等。下面将详细描述隐式类型转换的触发机制和原因。
-隐式类型转换的触发
-隐式类型转换通常在以下情况下发生：
-赋值操作
-函数调用
-表达式求值
-返回值类型转换
-
-编译器的处理方式
-当构造函数被标记为 explicit 时，编译器会在以下几种隐式转换场景中抛出错误：
 
 # 类型别名 typdef 、using
 
@@ -580,7 +575,7 @@ shared_ptr (P431)
 
 关键字 [意味着]出现的地方 P424 
 [值的注意] 出现的地方 P421
-
+[值得注意]出现的地方 P477 最后一行
 
 [遗留的问题]
 智能指针 unique_ptr 使用场景？？ 表12.6指向数组的unique_ptr （P426）
@@ -624,3 +619,5 @@ Ai的回答
 2、C++ 标准库容器对异常发生时其自身的行为提供保障，是怎么做的？[具体做法](/CppPrimer-master/STL/noexcept.md)
 3、C++ 开发准则 C++ Core Guidelines [开发指南](/CppPrimer-master/STL/C++%20Core%20Guidelines.md)
 4、[C++ 三大标准 四大范式](/CppPrimer-master/STL/三大标准四大范式.md)
+5、[C++ 函数调用匹配原则](/CppPrimer-master/STL/C++%20函数调用匹配原则.md)
+6、[编译器会在一些特定情况下自动生成（或“合成”）某些成员函数](/CppPrimer-master/STL/C++编译器生成拷贝控制成员的原则.md)

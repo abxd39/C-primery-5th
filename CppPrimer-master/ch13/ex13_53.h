@@ -8,6 +8,7 @@ public:
     friend void swap(HasPtr&, HasPtr&);
     HasPtr(const std::string &s = std::string());
     HasPtr(const HasPtr &hp);
+    //移动构造函数
     HasPtr(HasPtr &&p) noexcept;
     HasPtr& operator=(HasPtr rhs);
     //HasPtr& operator=(const HasPtr &rhs);
