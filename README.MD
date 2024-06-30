@@ -526,7 +526,11 @@ operator type()const;
 [operator<<](/CppPrimer-master/ch14/ex14_02.h)
 [operator+](/CppPrimer-master/ch14/ex14_02.h)
 [operator+=](/CppPrimer-master/ch14/ex14_02.h)
-
+[operator==](/CppPrimer-master/ch14/ex14_16_String.h)
+[operator!=](/CppPrimer-master/ch14/ex14_16_String.h)
+[operator=]()
+类型转换运算符 
+[operator type()]()
 
 # 类型别名 typdef 、using
 
