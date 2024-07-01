@@ -6,4 +6,9 @@
 [operator<<](/CppPrimer-master/ch14/ex14_02.h)
 [operator+](/CppPrimer-master/ch14/ex14_02.h)
 [operator+=](/CppPrimer-master/ch14/ex14_02.h)
+[自赋值](/CppPrimer-master/keyword/自赋值.md)
+前置++ --- 后置++ --
+[operatpr++](/CppPrimer-master/ch14/ex14_27_28_StrBlob.h)
 
+标准库类型
+[ptrdiff_t](/CppPrimer-master/keyword/ptrdiff_t.md)
