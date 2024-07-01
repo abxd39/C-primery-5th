@@ -518,6 +518,19 @@ operator type()const;
 因为类型转换运算符是隐式执行的，所以无法给这些函数转递实参，也就不能在类型转换运算符的定义中使用任何形参。
 
 
+# 关键字 说明及使用示例列表
+[explicit](/CppPrimer-master/keyword/explicit.md)
+[friend](/CppPrimer-master/ch14/ex14_02.h)
+[inline](/CppPrimer-master/ch14/ex14_02.h)
+[operator>>](/CppPrimer-master/ch14/ex14_02.h)
+[operator<<](/CppPrimer-master/ch14/ex14_02.h)
+[operator+](/CppPrimer-master/ch14/ex14_02.h)
+[operator+=](/CppPrimer-master/ch14/ex14_02.h)
+[operator==](/CppPrimer-master/ch14/ex14_16_String.h)
+[operator!=](/CppPrimer-master/ch14/ex14_16_String.h)
+[operator=]()
+类型转换运算符 
+[operator type()]()
 
 # 类型别名 typdef 、using
 

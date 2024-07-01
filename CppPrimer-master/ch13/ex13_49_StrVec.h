@@ -17,9 +17,13 @@ public:
 	StrVec() : elements(nullptr), first_free(nullptr), cap(nullptr) {}
 	StrVec(std::initializer_list<std::string>);
 	StrVec(const StrVec&);
+	//拷贝赋值运算符
 	StrVec& operator=(const StrVec&);
 	StrVec(StrVec&&) NOEXCEPT;
+	//移动赋值运算符
 	StrVec& operator=(StrVec&&) NOEXCEPT;
+	//第三种赋值运算符
+	StrVec &operator=(std::initializer_list<std::string>);
 	~StrVec();
 
 	void push_back(const std::string&);
