@@ -12,3 +12,7 @@
 
 标准库类型
 [ptrdiff_t](/CppPrimer-master/keyword/ptrdiff_t.md)
+
+[有必要将一个成员函数同时声明成override 和final?](/CppPrimer-master/keyword/final和override%20组合修饰函数.md)
+
+[标准库定义的函数对象](/CppPrimer-master/ch14/ex14_42.cpp)
