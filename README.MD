@@ -518,19 +518,7 @@ operator type()const;
 因为类型转换运算符是隐式执行的，所以无法给这些函数转递实参，也就不能在类型转换运算符的定义中使用任何形参。
 
 
-# 关键字 说明及使用示例列表
-[explicit](/CppPrimer-master/keyword/explicit.md)
-[friend](/CppPrimer-master/ch14/ex14_02.h)
-[inline](/CppPrimer-master/ch14/ex14_02.h)
-[operator>>](/CppPrimer-master/ch14/ex14_02.h)
-[operator<<](/CppPrimer-master/ch14/ex14_02.h)
-[operator+](/CppPrimer-master/ch14/ex14_02.h)
-[operator+=](/CppPrimer-master/ch14/ex14_02.h)
-[operator==](/CppPrimer-master/ch14/ex14_16_String.h)
-[operator!=](/CppPrimer-master/ch14/ex14_16_String.h)
-[operator=]()
-类型转换运算符 
-[operator type()]()
+
 
 # 类型别名 typdef 、using
 
@@ -599,13 +587,6 @@ Ai的回答
 
  移动语义：右值引用用于实现移动构造函数和移动赋值运算符，从而避免不必要的深拷贝，优化性能。
 
-[遗留问题10]：tcp包如何区分同一个连接的不同api请求？
-tcp 包是无法区分的，也不需要区分；
-http属于应用层协议，有完整的协议格式
-
-[遗留问题11]http 如何区分同一个API接口的并发请求对应的服务器响应？
-
-[遗留问题12]socket 高并发编程，是如何实现的？
 总结
 - 左值引用（Lvalue Reference）
 - 定义：用于引用左值（具有持久存储的对象）。
@@ -618,6 +599,17 @@ http属于应用层协议，有完整的协议格式
 - 实现移动语义以避免不必要的深拷贝。
 - 模板函数中用于完美转发以保持参数的左值或右值特性。
 - 通过正确使用左值引用和右值引用，可以大幅优化程序性能，尤其是涉及到资源管理和大型对象时，它们都是强大的工具。
+
+
+[遗留问题10]：tcp包如何区分同一个连接的不同api请求？
+tcp 包是无法区分的，也不需要区分；
+http属于应用层协议，有完整的协议格式
+
+[遗留问题11]http 如何区分同一个API接口的并发请求对应的服务器响应？
+
+[遗留问题12]socket 高并发编程，是如何实现的？
+
+
 
 [遗留问题13](C++ 11 新标准为何要增加lambda ？对于你自己来说，什么情况下会使用lambda  ，什么情况下会使用类？)
 练手项目 
