@@ -27,6 +27,7 @@ private:
 class Screen {
     friend void Window_mgr::clear(ScreenIndex);
 public:
+//pos 类型名
     using pos = std::string::size_type;
 
     Screen() = default; // 1
