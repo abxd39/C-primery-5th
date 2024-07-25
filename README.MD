@@ -309,23 +309,23 @@ lambda 以一对[]开始，我们在其中提供一个以逗号分隔的名字�
 
 # lambda引用捕获
 
-accumulate 算法 P338
-equal 算法 P339
-find 算法 P336
-fill 算法 P340
-fill_n 算法 P340
-replace 算法 P342
-replace_copy 算法 P342
-partition 划分算法 P345 （练习 10.13）
-copy 算法P341
-erase 算法
-unique 算法 P343
-unique_copy
-sort 算法
-table_sort 排序算法 P347
-find_if 算法 P346 P348
-for_each 算法 P348
-使用示例⬇⬇⬇⬇
+accumulate 算法 P338  
+equal 算法 P339  
+find 算法 P336  
+fill 算法 P340  
+fill_n 算法 P340  
+replace 算法 P342  
+replace_copy 算法 P342  
+partition 划分算法 P345 （练习 10.13）  
+copy 算法P341  
+erase 算法  
+unique 算法 P343  
+unique_copy  
+sort 算法  
+table_sort 排序算法 P347  
+find_if 算法 P346 P348  
+for_each 算法 P348  
+使用示例⬇⬇⬇⬇  
 ##[Exercise 10.16](/CppPrimer-master/ch10/ex10_16.cpp)
 
 # 10.3.4  参数绑定 
@@ -467,7 +467,7 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 [shared_ptr 类](https://learn.microsoft.com/zh-cn/cpp/standard-library/shared-ptr-class?view=msvc-170)
 [make_shared 构造一个shared_ptr](https://learn.microsoft.com/zh-cn/cpp/standard-library/memory-functions?view=msvc-170#make_shared)
 # 12.1 动态内存与智能指针
-表12.1 shared_ptr和unique_ptr   都支持的操作（P401）
+表12.1 shared_ptr和unique_ptr   都支持的操作（P401）  
 
 需要注意的几个成员：
 get函数 返回一个内置指针，指向只能指针管理的对象，该函数是为了这样一种情况而设计的：我们需要像不能使用智能指针的代码传递一个内置指针。使用get 返回的指针的代码不能delete 此指针。
