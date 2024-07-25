@@ -464,7 +464,8 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 不能直接定义关键字类型为自定义类型的无序容器。与容器不同不能直接使用哈希模板，而必须提供自己的hash模板版本。
 
 # 12 动态内存
-
+[shared_ptr 类](https://learn.microsoft.com/zh-cn/cpp/standard-library/shared-ptr-class?view=msvc-170)
+[make_shared 构造一个shared_ptr](https://learn.microsoft.com/zh-cn/cpp/standard-library/memory-functions?view=msvc-170#make_shared)
 # 12.1 动态内存与智能指针
 表12.1 shared_ptr和unique_ptr   都支持的操作（P401）
 
