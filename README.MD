@@ -414,18 +414,38 @@ unique_copy 算法
  使用算法操作流迭代器（P360）
  ## ostream_iterator 操作 创建一个ostream_iterator 时必须将ostream_iterator 绑定到一个指定的流，不允许创建一个空的或表示尾后位置的ostream_iterator。 我们还可以提供一个可选的第二参数，它是一个字符串，在输出每个元素后都会打印此字符串，此字符串是一个C风格字符串。
  ## [Exercise 10.33](/CppPrimer-master/ch10/ex10_33.cpp)
-# 10.4.3 反向迭代器（reverse_iterator） base 成员函数返回其对应的普通迭代器；
+# 10.4.3 反向迭代器（reverse_iterator） 就是在容器中从尾元素向首元素反向移动的迭代器。对于反向迭代器，递增（以及递减）操作的含义会颠倒过来。递增一个反向迭代器（++it）会移动至前一个元素，递减一个迭代器（-- it）会移动到下一个元素。    
+### base 成员函数返回其对应的普通迭代器；
 使用范例;
 ## [Exercise 10.34 ~ 10.37](/CppPrimer-master/ch10/ex10_34_35_36_37.cpp)
-反向迭代器的目的是表示元素范围，而这些元素范围是不对称的，这导致一个重要的结果：当我们从一个谱通迭代器初始化一个反向迭代器，或是给一个反向迭代器赋值时，结果迭代器与原迭代器指向的不是相同的元素。需调用其成员函数base() .返回指向正确位置的迭代器。
+## Note
+*反向迭代器的目的是表示元素范围，而这些元素范围是不对称的，这导致一个重要的结果：当我们从一个谱通迭代器初始化一个反向迭代器，或是给一个反向迭代器赋值时，结果迭代器与原迭代器指向的不是相同的元素。需调用其成员函数base() .返回指向正确位置的迭代器。*
 
-#  11.0 关联容器 
-当想知道一个值是否存在时，set是最有用的。
+#  11.0 关联容器 map 与 set
+***当想知道一个值是否存在时，set是最有用的。***  
+```cpp
+#include <iostream>
+#include <set>
+#include <string>
+
+int main() {
+    std::set<std::string> fruits = {"apple", "banana", "orange"};
+    
+    std::string search_fruit = "banana";
+    
+    if (fruits.find(search_fruit) != fruits.end()) {
+        std::cout << search_fruit << " is in the set." << std::endl;
+    } else {
+        std::cout << search_fruit << " is not in the set." << std::endl;
+    }
+    
+    return 0;
+}
+```
 
 
 # 11.2.2 关键字类型的要求
-有序容器的关键字类型 可以向一个算法提供给我们自己定义的比较操作。以之类似，也可以提供自己定义的操作来代替关键字上的 < 运算符
-
+有序容器的关键字类型 可以向一个算法提供给我们自己定义的比较操作。以之类似，也可以提供自己定义的操作来代替关键字上的 < 运算符  
 使用关键字类型的比较函数。————用来组织一个容器中元素操作的类型也时该容器类型的一部分，为了指定使用自定义的操作。必须在定义关联容器类型时提供此操作的类型。
 
 ```cpp
@@ -447,13 +467,13 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 # 11.3.3 删除元素
 
 # 11.3.4 map的下标操作
-使用下标操作的返回值类型为mapped_type对象，解引用一个map迭代器时会得到一个value_type对象，
+使用下标操作的返回值类型为mapped_type对象，解引用一个map迭代器时会得到一个value_type对象，  
 与vector 与string 不同，map的下标运算符返回的类型与解引用map 迭代器得到的类型不同。
 
 # 11.3.5 访问元素
-如果我们所关心的只不过是一个特定元素是否已在容器中，find 是最佳选择。如果使用下标获取元素，当元素不存在时会插入一个新元素。
-表11.7 在一个关联容器中查找元素操作（P388）
-一种不同的，面向迭代器的解决方法。
+如果我们所关心的只不过是一个特定元素是否已在容器中，find 是最佳选择。如果使用下标获取元素，当元素不存在时会插入一个新元素。  
+表11.7 在一个关联容器中查找元素操作（P388）  
+一种不同的，面向迭代器的解决方法。  
 
 
 # 11.4 无需容器
@@ -464,8 +484,8 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 不能直接定义关键字类型为自定义类型的无序容器。与容器不同不能直接使用哈希模板，而必须提供自己的hash模板版本。
 
 # 12 动态内存
-[shared_ptr 类](https://learn.microsoft.com/zh-cn/cpp/standard-library/shared-ptr-class?view=msvc-170)
-[make_shared 构造一个shared_ptr](https://learn.microsoft.com/zh-cn/cpp/standard-library/memory-functions?view=msvc-170#make_shared)
+## [shared_ptr 类](https://learn.microsoft.com/zh-cn/cpp/standard-library/shared-ptr-class?view=msvc-170)  
+## [make_shared 构造一个shared_ptr](https://learn.microsoft.com/zh-cn/cpp/standard-library/memory-functions?view=msvc-170#make_shared)
 # 12.1 动态内存与智能指针
 表12.1 shared_ptr和unique_ptr   都支持的操作（P401）  
 
