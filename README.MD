@@ -21,7 +21,7 @@ initializer_list 形参 ，如果函数的实惨数量未知但是类型是相�
 # 6.3.3 返回值为数组指针
 因为数组不能被拷贝，所以函数不能返回数组。
 返回数组指针的函数形式如下:
-
+补充说明：需要注意的是，函数返回的数组指针指向的是动态分配的内存或已存在的数组
 Type (*function(parameter_list))[dimension]
 auto func(int i)-> int(*)[10];
 
@@ -34,6 +34,7 @@ typedef int arr_int[10];
 using int arr_int[10];
 
 arr_int* func(int i);
+
 
 
 # 6.4 函数重载
@@ -72,11 +73,11 @@ bool(*pf)(const string &,const string&)
 1、变量初始化
 2、以值的方式传递参数或返回对象，
 
-使用赋值运算符
+3、使用赋值运算符
 
 # 7.4 类的作用域 P253
-## 类型名要特殊处理，类型名的定义通常出现在类的开始处，这样就能确保所有使用该类型的成员都出现在类名的定义之后
-[类型名](/CppPrimer-master/ch07/ex7_32.h)
+## 类型别名要特殊处理，类型别名的定义通常出现在类的开始处，这样就能确保所有使用该类型的成员都出现在类名的定义之后
+[类型别名](/CppPrimer-master/ch07/ex7_32.h)
 
 
 # 7.5.4 隐式的类类型转换 
@@ -91,6 +92,7 @@ IO类型间的关系
 
 # 8.1.2 条件状态
 由于流可能处于错误状态，因此代码通常应该在使用一个流之前检查它是否处于良好状态，确定一个流对象的状态的最简单方式是将它作为一个条件来使用
+推荐用法:
 ``` c++ 
 while( cin>>word)
     //ok 读取操作成功
@@ -307,32 +309,84 @@ lambda 以一对[]开始，我们在其中提供一个以逗号分隔的名字�
 
 # lambda引用捕获
 
-accumulate 算法 P338
-equal 算法 P339
-find 算法 P336
-fill 算法 P340
-fill_n 算法 P340
-replace 算法 P342
-replace_copy 算法 P342
-partition 划分算法 P345 （练习 10.13）
-copy 算法P341
-erase 算法
-unique 算法 P343
-unique_copy
-sort 算法
-table_sort 排序算法 P347
-find_if 算法 P346 P348
-for_each 算法 P348
-使用示例⬇⬇⬇⬇
+accumulate 算法 P338  
+equal 算法 P339  
+find 算法 P336  
+fill 算法 P340  
+fill_n 算法 P340  
+replace 算法 P342  
+replace_copy 算法 P342  
+partition 划分算法 P345 （练习 10.13）  
+copy 算法P341  
+erase 算法  
+unique 算法 P343  
+unique_copy  
+sort 算法  
+table_sort 排序算法 P347  
+find_if 算法 P346 P348  
+for_each 算法 P348  
+使用示例⬇⬇⬇⬇  
 ##[Exercise 10.16](/CppPrimer-master/ch10/ex10_16.cpp)
 
-# 10.3.4  参数绑定 标准库 bind函数  
+# 10.3.4  参数绑定 
+# 标准库 bind函数  
+# 绑定 check_size 的size 参数
+```cpp
+bool check_size(const string &s,string::size_type sz){
+    return s.size()>=sz;
+}
+```
+# 绑定 check_size 的sz 参数
+作为一个简单的例子，我们将使用bind 生成一个调用 check_size的对象，如下所示，他用一个定值作为其大小参数来调用 check_size;
+```cpp
+//check6 是一个可调用对象。接受一个string 类型参数
+// 并用此 string 和值6来调用check_size
+auto check6=bing(check_size,_1,6);
+
+string s="hello";
+ bool b1=check6(s);//check6(s) 会调用check_size(s,6)
+```
+
+使用bind函数 我们可以将原来基于lambda的find_if 调用
+```cpp
+auto wc =find_if(words.being(),words.end(),[sz](const string &s){
+    return s.size()>=sz;
+});
+```
+替换为如下调用check_size的版本
+```cpp
+auto wc=find_if(words.begin(),words.end(),bind(check_size,_1,sz));
+```
+
+# 使用placeholders名字
+using namespace namespace_name 
+这种形式说明希望所有来自 namespce_name的名字可以直接在程序中直接使用。
+举例
+using namespace std::placeholders;
+# bind 参数
+# bind 重排参数顺序
+# 绑定引用参数
+```cpp
+for_each(words.begin(),words.end(),[&os,c](const string &s){
+    os<<s<<c;
+});
+//可以很容易编写一个函数，完成相同的工作
+ostream &print(ostream&os,const string &s,char c){
+    os<<s<<c;
+}
+//bind 函数用法。需要借助 标准库 ref 函数 或const 版本 cref函数
+for_each(words.begin(),words.end(),bind(print,ref(os),_1,' '));
+```
+
+using std::placeholders::_1;
+
  它定义在头文件functional中 ，可以将bind看作一个通用函数适配器，接受一个可调用对像（计做 对象1），生成一个新的可调用对象（记做对象2）来“适应” 或适配泛型算法函数的谓词参数 （P354）
  对象1 ：是一个有多个参数的自定义函数
- 对象2:适配器bind 生成的一个符合谓词参数的函数
+ 对象2:适配器bind函数的返回值， 返回一个符合谓词参数的函数
  函数对象1 定义如下：
- 对象1（参数1，参数2，参数3，_2,参数4，_1,其它参数....）;
+ 对象1（参数1，参数2，参数3,参数4,其它参数....）;
 
+bind的时候 把确定的参数依次绑定，需要动态传入的需要使用占位符。
 对象2= bind（对象1，参数1，参数2，参数3，_2,参数4，_1,其它参数....） ;
 
 对象2（_1，_2）;此处的参_1 会传递给上述 站位符_1, 此处的参数_2会传给上述站位符_2;
@@ -343,12 +397,13 @@ bind 做了什么？
  3、如果我们希望传递给bind的参数是一个引用，就必须使用标准库 ref 函数
 
  ```cpp
+
  //IO 类的对象是不支持拷贝赋值的。只能是引用或指针。
  for_each(words.begin(),words.end(),bind(print,ref(os),_1,' '));
 //函数ref 返回一个对象，包含给定的引用。此对象可以拷贝。
  ```
 # 10.4 在探迭代器
-
+[插入迭代器](https://learn.microsoft.com/zh-cn/cpp/standard-library/back-insert-iterator-class?view=msvc-170)
 
 # 10.4.1 节练习
 unique_copy 算法
@@ -359,18 +414,38 @@ unique_copy 算法
  使用算法操作流迭代器（P360）
  ## ostream_iterator 操作 创建一个ostream_iterator 时必须将ostream_iterator 绑定到一个指定的流，不允许创建一个空的或表示尾后位置的ostream_iterator。 我们还可以提供一个可选的第二参数，它是一个字符串，在输出每个元素后都会打印此字符串，此字符串是一个C风格字符串。
  ## [Exercise 10.33](/CppPrimer-master/ch10/ex10_33.cpp)
-# 10.4.3 反向迭代器（reverse_iterator） base 成员函数返回其对应的普通迭代器；
+# 10.4.3 反向迭代器（reverse_iterator） 就是在容器中从尾元素向首元素反向移动的迭代器。对于反向迭代器，递增（以及递减）操作的含义会颠倒过来。递增一个反向迭代器（++it）会移动至前一个元素，递减一个迭代器（-- it）会移动到下一个元素。    
+### base 成员函数返回其对应的普通迭代器；
 使用范例;
 ## [Exercise 10.34 ~ 10.37](/CppPrimer-master/ch10/ex10_34_35_36_37.cpp)
-反向迭代器的目的是表示元素范围，而这些元素范围是不对称的，这导致一个重要的结果：当我们从一个谱通迭代器初始化一个反向迭代器，或是给一个反向迭代器赋值时，结果迭代器与原迭代器指向的不是相同的元素。需调用其成员函数base() .返回指向正确位置的迭代器。
+## Note
+*反向迭代器的目的是表示元素范围，而这些元素范围是不对称的，这导致一个重要的结果：当我们从一个谱通迭代器初始化一个反向迭代器，或是给一个反向迭代器赋值时，结果迭代器与原迭代器指向的不是相同的元素。需调用其成员函数base() .返回指向正确位置的迭代器。*
 
-#  11.0 关联容器 
-当想知道一个值是否存在时，set是最有用的。
+#  11.0 关联容器 map 与 set
+***当想知道一个值是否存在时，set是最有用的。***  
+```cpp
+#include <iostream>
+#include <set>
+#include <string>
+
+int main() {
+    std::set<std::string> fruits = {"apple", "banana", "orange"};
+    
+    std::string search_fruit = "banana";
+    
+    if (fruits.find(search_fruit) != fruits.end()) {
+        std::cout << search_fruit << " is in the set." << std::endl;
+    } else {
+        std::cout << search_fruit << " is not in the set." << std::endl;
+    }
+    
+    return 0;
+}
+```
 
 
 # 11.2.2 关键字类型的要求
-有序容器的关键字类型 可以向一个算法提供给我们自己定义的比较操作。以之类似，也可以提供自己定义的操作来代替关键字上的 < 运算符
-
+有序容器的关键字类型 可以向一个算法提供给我们自己定义的比较操作。以之类似，也可以提供自己定义的操作来代替关键字上的 < 运算符  
 使用关键字类型的比较函数。————用来组织一个容器中元素操作的类型也时该容器类型的一部分，为了指定使用自定义的操作。必须在定义关联容器类型时提供此操作的类型。
 
 ```cpp
@@ -392,13 +467,13 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 # 11.3.3 删除元素
 
 # 11.3.4 map的下标操作
-使用下标操作的返回值类型为mapped_type对象，解引用一个map迭代器时会得到一个value_type对象，
+使用下标操作的返回值类型为mapped_type对象，解引用一个map迭代器时会得到一个value_type对象，  
 与vector 与string 不同，map的下标运算符返回的类型与解引用map 迭代器得到的类型不同。
 
 # 11.3.5 访问元素
-如果我们所关心的只不过是一个特定元素是否已在容器中，find 是最佳选择。如果使用下标获取元素，当元素不存在时会插入一个新元素。
-表11.7 在一个关联容器中查找元素操作（P388）
-一种不同的，面向迭代器的解决方法。
+如果我们所关心的只不过是一个特定元素是否已在容器中，find 是最佳选择。如果使用下标获取元素，当元素不存在时会插入一个新元素。  
+表11.7 在一个关联容器中查找元素操作（P388）  
+一种不同的，面向迭代器的解决方法。  
 
 
 # 11.4 无需容器
@@ -409,9 +484,10 @@ std::multiset<Sales_data, compareType> bookstore(compareIsbn);
 不能直接定义关键字类型为自定义类型的无序容器。与容器不同不能直接使用哈希模板，而必须提供自己的hash模板版本。
 
 # 12 动态内存
-
+## [shared_ptr 类](https://learn.microsoft.com/zh-cn/cpp/standard-library/shared-ptr-class?view=msvc-170)  
+## [make_shared 构造一个shared_ptr](https://learn.microsoft.com/zh-cn/cpp/standard-library/memory-functions?view=msvc-170#make_shared)
 # 12.1 动态内存与智能指针
-表12.1 shared_ptr和unique_ptr   都支持的操作（P401）
+表12.1 shared_ptr和unique_ptr   都支持的操作（P401）  
 
 需要注意的几个成员：
 get函数 返回一个内置指针，指向只能指针管理的对象，该函数是为了这样一种情况而设计的：我们需要像不能使用智能指针的代码传递一个内置指针。使用get 返回的指针的代码不能delete 此指针。
@@ -577,56 +653,6 @@ shared_ptr (P431)
 关键字 [意味着]出现的地方 P424 
 [值的注意] 出现的地方 P421
 [值得注意]出现的地方 P477 最后一行
-
-[遗留的问题]
-智能指针 unique_ptr 使用场景？？ 表12.6指向数组的unique_ptr （P426）
-可变参数模板（P618）?
-
- 所有权概念？ std::move 函数 
-
- 类的设计，是围绕着需要用到标准库容器和算法来设计的。令该类可以使用这些算法和容器以并满足使用迭代器的要求。
-
- C++ 左值应用与右值引用的使用场景？
-Ai的回答
- 返回引用：函数返回左值引用，可以用于链式调用或允许对返回值进行修改。
-
- 移动语义：右值引用用于实现移动构造函数和移动赋值运算符，从而避免不必要的深拷贝，优化性能。
-
-总结
-- 左值引用（Lvalue Reference）
-- 定义：用于引用左值（具有持久存储的对象）。
-- 适用场景：
-- 传递参数以避免拷贝。
-- 函数返回引用以实现链式调用或修改返回值。
-- 右值引用（Rvalue Reference）
-- 定义：用于引用右值（临时对象或字面值）。
-- 适用场景：
-- 实现移动语义以避免不必要的深拷贝。
-- 模板函数中用于完美转发以保持参数的左值或右值特性。
-- 通过正确使用左值引用和右值引用，可以大幅优化程序性能，尤其是涉及到资源管理和大型对象时，它们都是强大的工具。
-
-
-[遗留问题10]：tcp包如何区分同一个连接的不同api请求？
-tcp 包是无法区分的，也不需要区分；
-http属于应用层协议，有完整的协议格式
-
-[遗留问题11]http 如何区分同一个API接口的并发请求对应的服务器响应？
-
-[遗留问题12]socket 高并发编程，是如何实现的？
-
-
-
-[遗留问题13](C++ 11 新标准为何要增加lambda ？对于你自己来说，什么情况下会使用lambda  ，什么情况下会使用类？)
-练手项目 
-[QT做 多人聊天支持文件传输] 
-1、QT做显示界面
-2、CS模式
-
-[遗留问题14](15.7.1节练习 练习15.24：那种类需要虚析构函数？虚析构函数必须执行什么样的操作？)
-
-[遗留问题15](把书上的内容与在线文档对应理解，这样子在查看文档的时候容易理解。书上看到的现在理解的知道的。一段时间后就会忘记。为了解决这个问题。需要使用在线文档。)
-
-[遗留问题](类继承体系的设计是一个非常复杂的问题)
 
 对[类]的一些思考
 1、应该如何设计？
