@@ -401,6 +401,15 @@ bind 做了什么？
  //IO 类的对象是不支持拷贝赋值的。只能是引用或指针。
  for_each(words.begin(),words.end(),bind(print,ref(os),_1,' '));
 //函数ref 返回一个对象，包含给定的引用。此对象可以拷贝。
+auto g=bind(f,a,b,_2,c,_1);
+//这个bind 调用会将
+g(_1,_2);
+//映射为
+f(a,b,_2,c,_1);
+//即 对g的调用会调用f,调用g的参数代替占位符，再加上绑定的参数a,b,c 
+//举例
+g(X,Y);
+f(a,b,Y,c,X);
  ```
 # 10.4 在探迭代器
 [插入迭代器](https://learn.microsoft.com/zh-cn/cpp/standard-library/back-insert-iterator-class?view=msvc-170)

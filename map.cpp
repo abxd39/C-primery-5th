@@ -70,3 +70,11 @@ void demonstrateMapOperations() {
     std::map<std::string, int> otherMap{{"grape", 4}};
     fruitCounts.swap(otherMap);
 }
+
+//入口函数
+int main() {
+   demonstrateMapOperations();
+    return 0;
+}
+
+
