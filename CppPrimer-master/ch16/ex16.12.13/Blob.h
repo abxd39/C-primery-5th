@@ -29,6 +29,7 @@ public:
     const T& operator [](size_type i) const;
 
 private:
+    //在模板作用域中引用模板类型
     std::shared_ptr<std::vector<T>> data;
     //! throw msg if data[i] isn't valid
     void check(size_type i, const std::string &msg) const;
